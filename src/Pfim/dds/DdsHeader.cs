@@ -148,6 +148,75 @@ namespace Pfim
     }
 
     /// <summary>
+    /// Specifies the complexity of the surfaces stored.
+    /// </summary>
+    [Flags]
+    public enum DdsCaps : uint
+    {
+        /// <summary>
+        /// Optional; must be used on any file that contains more than one surface (a mipmap, a cubic environment map, or mipmapped volume texture).
+        /// </summary>
+        Complex = 0x8,
+
+        /// <summary>
+        /// Optional; should be used for a mipmap.
+        /// </summary>
+        MipMap = 0x400000,
+
+        /// <summary>
+        /// Required.
+        /// </summary>
+        Texture = 0x1000
+    }
+
+    /// <summary>
+    /// Additional detail about the surfaces stored.
+    /// </summary>
+    [Flags]
+    public enum DdsCaps2 : uint
+    {
+        /// <summary>
+        /// Required for a cube map.
+        /// </summary>
+        Cubemap = 0x200,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapPositiveX = 0x400,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapNegativeX = 0x800,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapPositiveY = 0x1000,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapNegativeY = 0x2000,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapPositiveZ = 0x4000,
+
+        /// <summary>
+        /// Required when these surfaces are stored in a cube map.
+        /// </summary>
+        CubemapNegativeZ = 0x8000,
+
+        /// <summary>
+        /// Required for a volume texture.
+        /// </summary>
+        Volume = 0x200000,
+    }
+
+    /// <summary>
     /// Surface pixel format.
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/bb943984(v=vs.85).aspx
     /// </summary>
@@ -276,8 +345,8 @@ namespace Pfim
                 pixelFormat.BBitMask = *workingBufferPtr++;
                 pixelFormat.ABitMask = *workingBufferPtr++;
 
-                Caps = *workingBufferPtr++;
-                Caps2 = *workingBufferPtr++;
+                Caps = (DdsCaps)(*workingBufferPtr++);
+                Caps2 = (DdsCaps2)(*workingBufferPtr++);
                 Caps3 = *workingBufferPtr++;
                 Caps4 = *workingBufferPtr++;
                 Reserved2 = *workingBufferPtr++;
@@ -337,12 +406,12 @@ namespace Pfim
         /// <summary>
         /// Specifies the complexity of the surfaces stored.
         /// </summary>
-        public uint Caps { get; private set; }
+        public DdsCaps Caps { get; private set; }
 
         /// <summary>
         /// Additional detail about the surfaces stored.
         /// </summary>
-        public uint Caps2 { get; private set; }
+        public DdsCaps2 Caps2 { get; private set; }
 
         /// <summary>
         /// Unused
