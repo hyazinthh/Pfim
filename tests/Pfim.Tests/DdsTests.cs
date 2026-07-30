@@ -535,7 +535,7 @@ namespace Pfim.Tests
         [InlineData("dxt5-simple-odd.dds")]
         [InlineData("dxt5-simple.dds")]
         [InlineData("TestVolume_Noise3D.dds")]
-        [InlineData("wose_BC1_UNORM.dds")]
+        [InlineData("wose_BC1_UNORM.DDS")]
         [InlineData("24-bit-odd.tga")]
         [InlineData("CBW8.tga")]
         [InlineData("CCM8.tga")]
